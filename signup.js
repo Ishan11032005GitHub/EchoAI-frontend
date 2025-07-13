@@ -64,7 +64,7 @@ document.getElementById("signupForm")?.addEventListener("submit", async (e) => {
   try {
     const profilePicture = file ? await convertToBase64(file) : null;
 
-    const response = await fetch("http://localhost:3000/signup", {
+    const response = await fetch("https://echoai-production-56c9.up.railway.app/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...formData, profilePicture }),
@@ -77,7 +77,7 @@ document.getElementById("signupForm")?.addEventListener("submit", async (e) => {
     localStorage.setItem("authToken", result.token);
 
     // ✅ Verify token before redirect
-    fetch("http://localhost:3000/api/auth/verify", {
+    fetch("https://echoai-production-56c9.up.railway.app/api/auth/verify", {
       method: "GET",
       headers: { Authorization: `Bearer ${result.token}` },
       credentials: "include",

@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (localHistory.length) displayImages(localHistory);
 
     try {
-      const res = await fetch(`http://localhost:3000/api/imagehistory/${currentUserId}`);
+      const res = await fetch(`https://echoai-production-56c9.up.railway.app/api/imagehistory/${currentUserId}`);
       if (!res.ok) throw new Error("Failed to load image history");
       const serverData = await res.json();
       const serverHistory = serverData.images || [];
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.setItem(localImageKey, JSON.stringify(updated));
 
     try {
-      await fetch("http://localhost:3000/api/image", {
+      await fetch("https://echoai-production-56c9.up.railway.app/api/image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(imageData)

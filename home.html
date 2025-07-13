@@ -273,7 +273,7 @@
   // Update the verifyAndInit function to be more robust:
 const verifyAndInit = async (token) => {
   try {
-    const res = await fetch('http://localhost:3000/api/auth/verify', {
+    const res = await fetch('https://echoai-production-56c9.up.railway.app/api/auth/verify', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,

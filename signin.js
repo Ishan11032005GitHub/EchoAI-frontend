@@ -22,8 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // ======================
   // 🧠 Handle OAuth Redirect Token (Google/Facebook)
   // ======================
-    const urlParams = new URLSearchParams(window.location.search);
-  const token = urlParams.get('token');
+    const token = new URL(window.location.href).searchParams.get('token');
 
   if (token) {
     document.body.classList.add('loading');

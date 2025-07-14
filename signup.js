@@ -27,6 +27,21 @@ window.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
   if (token) {
+    fetch("https://echoai-backend-development.up.railway.app/api/auth/verify", {
+  method: "GET",
+  headers: { Authorization: `Bearer ${token}` },
+  credentials: "include",
+})
+  .then(res => res.json())
+  .then(data => {
+    localStorage.setItem("currentUser", JSON.stringify(data.user));
+    window.location.href = "home.html";
+  })
+  .catch(err => {
+    console.error("❌ Token verification failed after Google login:", err);
+    localStorage.removeItem("authToken");
+    window.location.href = "signin.html?error=oauth_failed";
+  });
     localStorage.setItem("authToken", token);
     // Optional: Fetch user info here or just redirect
     window.location.href = "home.html";

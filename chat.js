@@ -42,10 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   addChatMessage("ai", `Hello ${currentUser.username || "there"}! How can I help you today?`);
-
-  const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-  const openRouterKey = "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";
-
   const chatHistory = [
     { role: "system", content: "You are a helpful assistant." }
   ];

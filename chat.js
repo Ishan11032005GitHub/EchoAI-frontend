@@ -152,30 +152,43 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 
   async function getGeminiResponse(prompt) {
-  const API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent";
-  const GEMINI_API_KEY = "AIzaSyC-9OAF_SrURWBovg88D7agzUVcZ_IBCMc"; // Replace with your Gemini API Key
+  const API_URL = "https://openrouter.ai/api/v1/chat/completions";
+  const OPENROUTER_API_KEY = "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";
 
-  const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
+  const response = await fetch(API_URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${OPENROUTER_API_KEY}`
     },
     body: JSON.stringify({
-      contents: [
+      model: "google/gemini-2.5-pro",
+      messages: [
         {
           role: "user",
-          parts: [{ text: prompt }]
+          content: [
+            {
+              type: "text",
+              text: prompt || "Describe this image"
+            },
+            {
+              type: "image_url",
+              image_url: {
+                url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+              }
+            }
+          ]
         }
       ]
     })
   });
 
   const data = await response.json();
-  console.log("Gemini response:", data);
+  console.log("OpenRouter Gemini response:", data);
 
-  if (!response.ok) throw new Error(data?.error?.message || "Gemini API request failed.");
+  if (!response.ok) throw new Error(data?.error?.message || "OpenRouter API request failed.");
 
-  const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response from model.";
+  const aiResponse = data.choices?.[0]?.message?.content || "No response from model.";
   chatHistory.push({ role: "assistant", content: aiResponse });
 
   return aiResponse;

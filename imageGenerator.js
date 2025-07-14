@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const clearHistoryBtn = document.getElementById("clearHistory");
   const body = document.body;
 
-  const BACKEND_URL = 'https://echoai-backend-development.up.railway.app/';
+  const BACKEND_URL = 'https://echoai-backend-development.up.railway.app';
 
   // ✅ Theme Initialization
   const savedTheme = localStorage.getItem("theme") || "dark";

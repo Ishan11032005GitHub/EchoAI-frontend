@@ -166,18 +166,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       messages: [
         {
           role: "user",
-          content: [
-            {
-              type: "text",
-              text: prompt || "Describe this image"
-            },
-            {
-              type: "image_url",
-              image_url: {
-                url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
-              }
-            }
-          ]
+          content: prompt
         }
       ]
     })
@@ -186,7 +175,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const data = await response.json();
   console.log("OpenRouter Gemini response:", data);
 
-  if (!response.ok) throw new Error(data?.error?.message || "OpenRouter API request failed.");
+  if (!response.ok) {
+    throw new Error(data?.error?.message || "OpenRouter API request failed.");
+  }
 
   const aiResponse = data.choices?.[0]?.message?.content || "No response from model.";
   chatHistory.push({ role: "assistant", content: aiResponse });

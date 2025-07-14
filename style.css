@@ -4,7 +4,7 @@
   --details-bg: #121212;
   --btn-bg: #eee;
   --btn-hover: #9b9b9b;
-  --detail-bg:#4CAF50;
+  --detail-bg: #4CAF50;
 }
 
 body.light-mode {
@@ -20,10 +20,11 @@ body {
   color: var(--text-color);
   font-family: 'Courier New', Courier, monospace;
   text-align: center;
+  margin: 0;
+  padding: 0;
   transition: background-color 0.4s, color 0.4s;
 }
 
-/* Scrollbar */
 body::-webkit-scrollbar {
   width: 10px;
 }
@@ -57,29 +58,19 @@ body::-webkit-scrollbar-thumb:hover {
 h1 {
   text-align: center;
   font-family: system-ui;
-  font-size: 5em;
+  font-size: 4em;
   font-weight: 900;
-}
-
-#bots {
-  width: 90%;
-  text-align: left;
-  margin-left: 5vw;
-  margin-top: 2.5vh;
-  font-size: 1.5em;
-}
-
-#intro {
-  text-align: left;
+  margin-top: 2vh;
 }
 
 #typewriter {
-  font-size: 2em;
-  display: inline;
+  font-size: 1.75em;
+  display: inline-block;
   border-right: 2px solid var(--text-color);
   margin-top: 2.5vh;
   white-space: nowrap;
   width: 0;
+  overflow: hidden;
   animation: typing 10s steps(200, end) forwards, blink 0.8s step-end infinite;
 }
 
@@ -89,14 +80,23 @@ h1 {
 }
 
 @keyframes blink {
-  0% { border-color: var(--text-color); }
+  0%, 100% { border-color: var(--text-color); }
   50% { border-color: transparent; }
-  100% { border-color: var(--text-color); }
 }
 
-#description {
-  font-size: 1.75em;
-  margin-top: 5vh;
+#description, #free, #slogan {
+  width: 90%;
+  margin: 4vh auto;
+  text-align: left;
+  font-size: 1.25em;
+  line-height: 1.6em;
+}
+
+#bots {
+  width: 90%;
+  margin: 2.5vh auto;
+  text-align: left;
+  font-size: 1.25em;
 }
 
 details {
@@ -104,8 +104,7 @@ details {
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 4px;
-  width: 100%;
-  margin-bottom: 2.5vh;
+  margin-bottom: 2vh;
   font-family: Arial, sans-serif;
 }
 
@@ -122,8 +121,7 @@ summary::before {
   position: absolute;
   left: 0;
   top: 0;
-  font-weight: bold;
-  font-size: 24px;
+  font-size: 1.25em;
 }
 
 details[open] summary::before {
@@ -133,36 +131,79 @@ details[open] summary::before {
 p {
   margin-top: 10px;
   background-color: var(--detail-bg);
+  padding: 5px;
 }
 
 #getstarted {
-  font-size: 1.5em;
+  font-size: 1.2em;
   border-radius: 8px;
-  padding: 5px;
+  padding: 10px 20px;
   background-color: var(--btn-bg);
   color: var(--bg-color);
-  margin-top: 2.5vh;
+  margin-top: 4vh;
   cursor: pointer;
   transition: background-color 0.5s ease-in-out;
+  border: none;
 }
 
 #getstarted:hover {
   background-color: var(--btn-hover);
 }
 
-#free {
-  width: 90%;
-  text-align: left;
-  margin-left: 5vw;
-  margin-top: 5vh;
-  font-size: 1.5em;
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3em;
+  }
+
+  #typewriter {
+    font-size: 1.4em;
+    width: 100%;
+  }
+
+  #description, #free, #slogan, #bots {
+    font-size: 1.1em;
+  }
+
+  #getstarted {
+    font-size: 1em;
+    padding: 8px 16px;
+  }
+
+  .theme-btn {
+    font-size: 1.2em;
+    padding: 8px;
+  }
 }
 
-#slogan {
-  width: 100%;
-  text-align: left;
-  margin-left: 5vw;
-  margin-top: 5vh;
-  font-size: 1.5em;
-  font-weight: 750;
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2.2em;
+  }
+
+  #typewriter {
+    font-size: 1.2em;
+  }
+
+  #description, #free, #slogan, #bots {
+    font-size: 1em;
+    width: 95%;
+  }
+
+  summary {
+    font-size: 1em;
+  }
+
+  p {
+    font-size: 0.95em;
+  }
+
+  #getstarted {
+    font-size: 1em;
+    padding: 6px 12px;
+  }
+
+  .theme-btn {
+    font-size: 1em;
+    padding: 6px;
+  }
 }

@@ -267,10 +267,7 @@
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const tokenFromURL = urlParams.get('token');
-  // Update the verifyAndInit function to be more robust:
+    // 🧠 Token Verification Function (Declared globally for reuse)
 const verifyAndInit = async (token) => {
   try {
     const res = await fetch('https://echoai-production-56c9.up.railway.app/api/auth/verify', {
@@ -282,15 +279,10 @@ const verifyAndInit = async (token) => {
       credentials: 'include'
     });
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
     const data = await res.json();
-    
-    if (!data.user) {
-      throw new Error('No user data in response');
-    }
+    if (!data.user) throw new Error('No user data in response');
 
     localStorage.setItem('authToken', token);
     localStorage.setItem('currentUser', JSON.stringify(data.user));
@@ -298,13 +290,19 @@ const verifyAndInit = async (token) => {
     initUI();
   } catch (err) {
     console.error('Verification failed:', err);
-    // Clear invalid credentials
     localStorage.removeItem('authToken');
     localStorage.removeItem('currentUser');
-    // Redirect to signin with error message
     window.location.href = `signin.html?error=session_expired`;
   }
 };
+
+// ⏳ Wait for DOM
+document.addEventListener('DOMContentLoaded', () => {
+  // 👁️ Hide UI initially to prevent flash
+  document.body.style.visibility = 'hidden';
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokenFromURL = urlParams.get('token');
 
   if (tokenFromURL) {
     console.log('🔑 OAuth token found in URL');
@@ -314,17 +312,20 @@ const verifyAndInit = async (token) => {
 
   const authToken = localStorage.getItem('authToken');
   let currentUser = {};
-try {
-  currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-} catch {
-  console.warn('Corrupted user data. Clearing...');
-  localStorage.removeItem('currentUser');
-  window.location.href = 'signin.html';
-}
+
+  try {
+    currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+  } catch {
+    console.warn('Corrupted user data. Clearing...');
+    localStorage.removeItem('currentUser');
+    window.location.href = 'signin.html';
+    return;
+  }
 
   if (!authToken) {
     console.warn('⛔ No token in localStorage. Redirecting...');
-    return (window.location.href = 'signin.html');
+    window.location.href = 'signin.html';
+    return;
   }
 
   if (!currentUser.id) {
@@ -334,50 +335,19 @@ try {
   }
 
   console.log('✅ Already logged in as:', currentUser.username || currentUser.name);
-  initUI(); // Ready to go
+  initUI();
 });
-function setupTypewriter() {
-  const textElement = document.getElementById("typewriter");
-  const fullText = "Your personal AI assistant for conversations, creativity, and productivity.";
-  let index = 0;
-  let direction = 1; // 1 = typing, -1 = deleting
-  const speed = 40;
-  const pauseDelay = 1500; // Pause after full text typed or erased
 
-  function typeLoop() {
-    if (direction === 1) {
-      textElement.textContent = fullText.substring(0, index + 1);
-      index++;
-      if (index === fullText.length) {
-        direction = -1;
-        setTimeout(typeLoop, pauseDelay); // pause before deleting
-        return;
-      }
-    } else {
-      textElement.textContent = fullText.substring(0, index - 1);
-      index--;
-      if (index === 0) {
-        direction = 1;
-        setTimeout(typeLoop, pauseDelay); // pause before retyping
-        return;
-      }
-    }
-    setTimeout(typeLoop, speed);
-  }
-
-  typeLoop();
-}
-
-// 🧠 Only call after login success
+// ✅ UI Setup After Login Success
 function initUI() {
-  // Logout Handler
+  // 🪪 Logout Handler
   document.getElementById('logoutBtn')?.addEventListener('click', () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('currentUser');
     window.location.replace('signin.html');
   });
 
-  // Theme Setup
+  // 🌗 Theme Setup
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'light') {
     document.body.classList.add('light-mode');
@@ -385,10 +355,10 @@ function initUI() {
     document.body.classList.remove('light-mode');
   }
 
-  // Typewriter Effect
+  // ⌨️ Typewriter Effect
   setupTypewriter();
 
-  // ✅ Profile Picture Setup
+  // 👤 Profile Image
   const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
   const heroImage = document.getElementById('heroProfileImage');
 
@@ -401,9 +371,45 @@ function initUI() {
       heroImage.alt = 'Echo AI Illustration';
     }
   }
+
+  // ✅ Reveal UI only after init
+  document.body.style.visibility = 'visible';
 }
 
-// 🌗 Theme toggle
+// 🎬 Typewriter Animation
+function setupTypewriter() {
+  const textElement = document.getElementById("typewriter");
+  const fullText = "Your personal AI assistant for conversations, creativity, and productivity.";
+  let index = 0;
+  let direction = 1;
+  const speed = 40;
+  const pauseDelay = 1500;
+
+  function typeLoop() {
+    if (direction === 1) {
+      textElement.textContent = fullText.substring(0, index + 1);
+      index++;
+      if (index === fullText.length) {
+        direction = -1;
+        setTimeout(typeLoop, pauseDelay);
+        return;
+      }
+    } else {
+      textElement.textContent = fullText.substring(0, index - 1);
+      index--;
+      if (index === 0) {
+        direction = 1;
+        setTimeout(typeLoop, pauseDelay);
+        return;
+      }
+    }
+    setTimeout(typeLoop, speed);
+  }
+
+  typeLoop();
+}
+
+// 🌙 Theme Toggle Handler
 function toggleTheme() {
   const body = document.body;
   const isLight = body.classList.toggle('light-mode');

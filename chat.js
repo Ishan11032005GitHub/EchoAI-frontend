@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function getGeminiResponse(prompt) {
   const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-  const OPENROUTER_API_KEY = "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";
+  const OPENROUTER_API_KEY = "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"; // ✅ Working key
 
   const response = await fetch(API_URL, {
     method: "POST",
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       "Authorization": `Bearer ${OPENROUTER_API_KEY}`
     },
     body: JSON.stringify({
-      model: "google/gemini-2.5-pro",
+      model: "mistralai/mistral-7b-instruct", // ✅ Working model
       messages: [
         {
           role: "user",
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   const data = await response.json();
-  console.log("OpenRouter Gemini response:", data);
+  console.log("OpenRouter Mistral response:", data);
 
   if (!response.ok) {
     throw new Error(data?.error?.message || "OpenRouter API request failed.");

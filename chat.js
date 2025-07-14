@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchChatHistory() {
     try {
-      const res = await fetch("http://localhost:3000/chathistory", {
+      const res = await fetch("https://echoai-backend-development.up.railway.app/chathistory", {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function saveChatWithFile(prompt, response, files = []) {
   try {
-    const url = `http://localhost:3000/chatWithFile`;
+    const url = `https://echoai-backend-development.up.railway.app/chatWithFile`;
     const formData = new FormData();
 
     formData.append("prompt", prompt);
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!confirm("Clear all chat history?")) return;
 
     try {
-      const res = await fetch("http://localhost:3000/chatDelete", {
+      const res = await fetch("https://echoai-backend-development.up.railway.app/chatDelete", {
         method: "DELETE",
         headers: { Authorization: `Bearer ${authToken}` },
       });

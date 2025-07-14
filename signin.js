@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     (async () => {
       try {
-        const verifyResponse = await fetch('https://echoai-production-56c9.up.railway.app/api/auth/verify', {
+        const verifyResponse = await fetch('https://echoai-backend-development.up.railway.app/api/auth/verify', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('SUBMITFORM').disabled = true;
 
     try {
-      const response = await fetch('https://echoai-production-56c9.up.railway.app/signin', {
+      const response = await fetch('https://echoai-backend-development.up.railway.app/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

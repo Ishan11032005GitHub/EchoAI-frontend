@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function getGeminiResponse(prompt) {
   const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
-  const GEMINI_API_KEY = "AIzaSyC-9OAF_SrURWBovg88D7agzUVcZ_IBCMc"; // Replace with your Gemini API Key
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY; // Replace with your Gemini API Key
 
   const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
     method: "POST",

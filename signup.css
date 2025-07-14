@@ -24,6 +24,23 @@ body.light-mode {
   --filter-shadow: drop-shadow(2px 2px 10px #888);
 }
 
+/* Scrollbar */
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  background: #2e2e2e;
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+  border: 2px solid #2e2e2e;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
 * {
   margin: 0;
   padding: 0;

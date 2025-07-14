@@ -23,6 +23,23 @@ body {
   transition: background-color 0.4s, color 0.4s;
 }
 
+/* Scrollbar */
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  background: #2e2e2e;
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+  border: 2px solid #2e2e2e;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
 .theme-btn {
   position: fixed;
   top: 10px;

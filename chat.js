@@ -152,37 +152,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 
   async function getGeminiResponse(prompt) {
-  const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-  const OPENROUTER_API_KEY = "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"; // ✅ Working key
-
-  const response = await fetch(API_URL, {
+  const response = await fetch("https://echoai-backend-development.up.railway.app/api/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${OPENROUTER_API_KEY}`
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`
     },
-    body: JSON.stringify({
-      model: "mistralai/mistral-7b-instruct", // ✅ Working model
-      messages: [
-        {
-          role: "user",
-          content: prompt
-        }
-      ]
-    })
+    body: JSON.stringify({ prompt })
   });
 
   const data = await response.json();
-  console.log("OpenRouter Mistral response:", data);
+  console.log("Backend AI Response:", data);
 
   if (!response.ok) {
-    throw new Error(data?.error?.message || "OpenRouter API request failed.");
+    throw new Error(data?.error || "AI request failed");
   }
 
-  const aiResponse = data.choices?.[0]?.message?.content || "No response from model.";
-  chatHistory.push({ role: "assistant", content: aiResponse });
-
-  return aiResponse;
+  chatHistory.push({ role: "assistant", content: data.response });
+  return data.response;
 }
 
   async function saveChatWithFile(prompt, response, files = []) {

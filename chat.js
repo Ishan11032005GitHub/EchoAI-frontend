@@ -156,30 +156,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 
   async function getGeminiResponse(prompt) {
-    chatHistory.push({ role: "user", content: prompt });
+  const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+  const GEMINI_API_KEY = "AIzaSyC-9OAF_SrURWBovg88D7agzUVcZ_IBCMc"; // Replace with your Gemini API Key
 
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${openRouterKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "openrouter/cypher-alpha:free",
-        messages: chatHistory
-      })
-    });
+  const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: prompt }]
+        }
+      ]
+    })
+  });
 
-    const data = await response.json();
-    console.log("OpenRouter response:", data);
+  const data = await response.json();
+  console.log("Gemini response:", data);
 
-    if (!response.ok) throw new Error(data?.error?.message || "OpenRouter request failed.");
+  if (!response.ok) throw new Error(data?.error?.message || "Gemini API request failed.");
 
-    const aiResponse = data.choices?.[0]?.message?.content || "No response from model.";
-    chatHistory.push({ role: "assistant", content: aiResponse });
+  const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response from model.";
+  chatHistory.push({ role: "assistant", content: aiResponse });
 
-    return aiResponse;
-  }
+  return aiResponse;
+}
 
   async function saveChatWithFile(prompt, response, files = []) {
   try {

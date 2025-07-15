@@ -5,30 +5,31 @@ const userFromURL = params.get("user");
 
 if (tokenFromURL && userFromURL) {
   localStorage.setItem("authToken", tokenFromURL);
-  localStorage.setItem("currentUser", decodeURIComponent(userFromURL));
-
-  // Clear the URL of token info (optional for cleanliness)
-  window.history.replaceState({}, document.title, window.location.pathname);
-}
-
+  localStorage.setItem("currentUser", decodeURIComponent(userFromURL)); // Keep as is
+  } 
+  
   const authToken = localStorage.getItem("authToken");
-  let currentUser;
+let currentUser;
 
-  try {
-    currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
-    if (!currentUser.username && currentUser.name) {
-      currentUser.username = currentUser.name;
-    }
-    if (!currentUser.id) {
-      currentUser.id = currentUser._id || currentUser.userId || null;
-    }
-    if (!authToken || !currentUser.id) {
-      throw new Error("Missing token or user ID");
-    }
-  } catch (err) {
-    console.warn("⛔ Invalid session. Redirecting...", err.message);
-    return (window.location.href = "signin.html");
+try {
+  currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+
+  // 🔽 PLACE THESE LINES HERE ✅
+  if (!currentUser.username && currentUser.name) {
+    currentUser.username = currentUser.name;
   }
+  if (!currentUser.id) {
+    currentUser.id = currentUser._id || currentUser.userId || null;
+  }
+
+  // 🔽 Final auth check
+  if (!authToken || !currentUser.id) {
+    throw new Error("Missing token or user ID");
+  }
+} catch (err) {
+  console.warn("⛔ Invalid session. Redirecting...", err.message);
+  return (window.location.href = "signin.html");
+}
 
   const chatContainer = document.querySelector(".chat-container");
   const promptInput = document.getElementById("prompt");
@@ -196,6 +197,7 @@ if (tokenFromURL && userFromURL) {
 
     formData.append("prompt", prompt);
     formData.append("response", response);
+
 
     files.forEach(file => formData.append("files", file));
 

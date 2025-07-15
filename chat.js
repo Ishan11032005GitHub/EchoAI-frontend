@@ -152,6 +152,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 
   async function getGeminiResponse(prompt) {
+    const authToken = localStorage.getItem("authToken");
+
+    if (!authToken) {
+      throw new Error("No auth credentials found");
+    }
   const response = await fetch("https://echoai-backend-development.up.railway.app/api/chat", {
     method: "POST",
     headers: {

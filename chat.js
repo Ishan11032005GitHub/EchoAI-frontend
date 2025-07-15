@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+const tokenFromURL = params.get("token");
+const userFromURL = params.get("user");
+
+if (tokenFromURL && userFromURL) {
+  localStorage.setItem("authToken", tokenFromURL);
+  localStorage.setItem("currentUser", decodeURIComponent(userFromURL));
+
+  // Clear the URL of token info (optional for cleanliness)
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
   const authToken = localStorage.getItem("authToken");
   let currentUser;
 

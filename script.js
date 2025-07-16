@@ -5,7 +5,6 @@ const phrases = [
 ];
 
 const typewriter = document.getElementById("typewriter");
-const cursor = document.getElementById("cursor");
 let phraseIndex = 0;
 let charIndex = 0;
 let typing = true;

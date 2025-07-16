@@ -212,11 +212,12 @@ p {
   font-family: monospace;
   white-space: nowrap;
   display: inline-block;
+  color: var(--text-color);
 }
 
 #typewriter {
   display: inline-block;
-  border-right: 2px solid black; /* The blinking cursor */
+  border-right: 2px solid var(--text-color); /* The blinking cursor */
   animation: blink-caret 0.7s step-end infinite;
 }
 

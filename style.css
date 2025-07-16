@@ -65,7 +65,8 @@ h1 {
 
 #typewriter {
   font-size: 1.75em;
-  min-height: 1.5em;
+  line-height: 1.2;
+  min-height: 1.75em;
   display: inline-block;
   border-right: 2px solid var(--text-color);
   margin-top: 2.5vh;

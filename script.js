@@ -5,6 +5,7 @@ const phrases = [
 ];
 
 const typewriter = document.getElementById("typewriter");
+const cursor = document.getElementById("cursor");
 let phraseIndex = 0;
 let charIndex = 0;
 let typing = true;
@@ -15,21 +16,28 @@ function typeEffect() {
   if (typing) {
     if (charIndex <= currentPhrase.length) {
       typewriter.textContent = currentPhrase.substring(0, charIndex++);
+      updateCursorPosition();
       setTimeout(typeEffect, 80);
     } else {
       typing = false;
-      setTimeout(typeEffect, 1500); // Pause before deleting
+      setTimeout(typeEffect, 1500); // pause before deleting
     }
   } else {
     if (charIndex > 0) {
       typewriter.textContent = currentPhrase.substring(0, --charIndex);
+      updateCursorPosition();
       setTimeout(typeEffect, 40);
     } else {
       typing = true;
       phraseIndex = (phraseIndex + 1) % phrases.length;
-      setTimeout(typeEffect, 500); // Pause before typing next
+      setTimeout(typeEffect, 500); // pause before typing next
     }
   }
+}
+
+function updateCursorPosition() {
+  const textWidth = typewriter.offsetWidth;
+  cursor.style.left = `${textWidth}px`;
 }
 
 typeEffect();

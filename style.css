@@ -69,9 +69,8 @@ h1 {
   border-right: 2px solid var(--text-color);
   margin-top: 2.5vh;
   white-space: nowrap;
-  width: 0;
   overflow: hidden;
-  animation: typing 10s steps(200, end) forwards, blink 0.8s step-end infinite;
+  animation: blink 0.8s step-end infinite;
 }
 
 @keyframes typing {
@@ -206,22 +205,4 @@ p {
     font-size: 1em;
     padding: 6px;
   }
-}
-
-.typewriter-container {
-  font-family: monospace;
-  white-space: nowrap;
-  display: inline-block;
-  color: var(--text-color);
-}
-
-#typewriter {
-  display: inline-block;
-  border-right: 2px solid var(--text-color); /* The blinking cursor */
-  animation: blink-caret 0.7s step-end infinite;
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: black; }
 }

@@ -207,3 +207,23 @@ p {
     padding: 6px;
   }
 }
+
+/* CSS */
+#typewriter-container {
+  font-family: monospace;
+  white-space: nowrap;
+  display: inline-block;
+  position: relative;
+}
+
+#cursor {
+  display: inline-block;
+  animation: blink 0.7s infinite;
+  position: relative;
+  left: 0;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
